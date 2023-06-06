@@ -32,7 +32,7 @@ class HomeStayController {
         let query = qs.parse(url.parse(req.url).query);
         if (query.id && req.method == 'GET') {
             let data = await homestayModel.getDetailHomestay(+query.id);
-            let {id, name, num_bedroom, num_badroom, price, descript, nameCity} = data[0];
+            let {id, name, num_bedroom, num_badroom, price, descript, idCity, nameCity} = data[0];
             let html = await BaseController.readFileData('./src/views/detail.html');
             let newHtml = '';
             newHtml += `<button class='btn btn-primary'><a href='/update?id=${id}'class="text-decoration-none" style="color: white;">Sửa</a></button>
@@ -63,11 +63,44 @@ class HomeStayController {
             req.on('end', async () => {
                 data = qs.parse(data);
                 let {name, idCity, num_bedroom, num_badroom, price, descript} = data;
-                await homestayModel.addHomeStay(name, +idCity, +num_bedroom, +num_badroom, +price, descript);
+                await homestayModel.addHomeStay(name, +idCity, +num_bedroom, +num_badroom, +price, descript).catch(err => console.log(err.message));
                 res.writeHead(301, {location: '/'});
                 res.end();
             })
             
+        }
+    }
+
+    static async updateHomestay(req, res) {
+        let query = qs.parse(url.parse(req.url).query);
+        if (query.id && req.method === 'GET') {
+            let data = await homestayModel.getDetailHomestay(+query.id);
+            let {id, name, num_bedroom, num_badroom, price, descript, idCity, nameCity} = data[0];
+            let html = await BaseController.readFileData('./src/views/update.html');
+            html = html.replace('{name}', `<label for="name" class="form-label">Tên</label>
+            <input type="text" class="form-control" id="name" name="name" value = ${name}>`);
+            html = html.replace('{city}', `<option value="${idCity}" selected>${nameCity}</option>`);
+            html = html.replace('{num_bedroom}', `<label for="num_bedroom" class="form-label">Số Phòng Ngủ</label>
+            <input type="number" class="form-control" id="num_bedroom" name="num_bedroom" value = ${num_bedroom}>`);
+            html = html.replace('{num_badroom}', `<label for="num_badroom" class="form-label">Số Phòng Vệ Sinh</label>
+            <input type="number" class="form-control" id="num_badroom" name="num_badroom" value = ${num_badroom}>`);
+            html = html.replace('{price}', `<label for="price" class="form-label">Giá</label>
+            <input type="number" class="form-control" id="price" name="price" value = ${price}>`);
+            html = html.replace('{descript}', `${descript}`);
+
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(html);
+            res.end();
+        } else {
+            let data = '';
+            req.on('data', chunk => data += chunk);
+            req.on('end', async () => {
+                data = qs.parse(data);
+                let {name, idCity, num_bedroom, num_badroom, price, descript} = data;
+                await homestayModel.updateHomestay(+query.id, name, +idCity, +num_bedroom, +num_badroom, +price, descript).catch(err => console.log(err.message));
+                res.writeHead(301, {location: '/'});
+                res.end();
+            })
         }
     }
 }

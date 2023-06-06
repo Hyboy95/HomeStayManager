@@ -15,7 +15,8 @@ const server = http.createServer((req, res) => {
 router = {
     '/': homestayController.getDisplayHomestayPage,
     '/detail': homestayController.getDetailPage,
-    '/add': homestayController.addHomestay
+    '/add': homestayController.addHomestay,
+    '/update': homestayController.updateHomestay,
 }
 
 
