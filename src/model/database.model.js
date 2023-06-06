@@ -5,7 +5,7 @@ class DatabaseModel {
         this.host = 'localhost';
         this.user = 'root';
         this.password = '123456';
-        this.database = 'QuanLySinhVien';
+        this.database = 'QuanLyHomstay';
     }
 
     connect() {

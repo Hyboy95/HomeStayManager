@@ -8,19 +8,23 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="header-content" >
-        <h2>Danh Sách Học Viên</h2>
-        <button><a href="/add">Thêm Học Viên</a></button>
+    <div class="content" >
+        <h2>Danh Sách HomeStay</h2>
+        <button class="btn btn-primary"><a href="/add" class="text-decoration-none" style="color: white;">Thêm HomeStay</a></button>
         <table class="table table-striped">
-            <tr>
-                <th>#</th>
-                <th>Tên</th>
-                <th>Lớp</th>
-                <th>Đánh giá</th>
-                <th>Lựa chọn</th>
-            </tr>
-            {list-student}
-        </table>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Thành Phố</th>
+                <th scope="col">Giá</th>
+                <th scope="col">Lựa chọn</th>
+              </tr>
+            </thead>
+            <tbody>
+                {list-homestay}
+            </tbody>
+          </table>
     </div>
     
 </body>

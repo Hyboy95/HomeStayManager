@@ -1,7 +1,7 @@
 const http = require('http');
 const url = require('url');
 
-const studentController = require('./src/controller/student.controller');
+const homestayController = require('./src/controller/homestay.controller');
 const GeneralController = require('./src/controller/general.controller');
 
 const PORT = 3000;
@@ -13,9 +13,9 @@ const server = http.createServer((req, res) => {
 })
 
 router = {
-    '/display': studentController.getDisplayStudentPage,
-    '/detailStudent': studentController.getDetailPage,
-    '/add': studentController.addStudent
+    '/': homestayController.getDisplayHomestayPage,
+    '/detail': homestayController.getDetailPage,
+    '/add': homestayController.addHomestay
 }
 
 
