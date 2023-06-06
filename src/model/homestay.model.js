@@ -26,6 +26,11 @@ class HomeStayModel extends BaseModel {
         WHERE id = ${id}`;
         await this.querySql(sql);
     }
+
+    async deleteHomestay(id) {
+        let sql = `DELETE FROM Homestay WHERE id = ${id}`;
+        await this.querySql(sql);
+    }
 }
 
 module.exports = new HomeStayModel;

@@ -17,7 +17,7 @@ router = {
     '/detail': homestayController.getDetailPage,
     '/add': homestayController.addHomestay,
     '/update': homestayController.updateHomestay,
+    '/delete': homestayController.deleteHomestay
 }
-
 
 server.listen(PORT, 'localhost', () => console.log(`Server is running at http://localhost:${PORT}`))

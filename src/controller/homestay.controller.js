@@ -63,7 +63,10 @@ class HomeStayController {
             req.on('end', async () => {
                 data = qs.parse(data);
                 let {name, idCity, num_bedroom, num_badroom, price, descript} = data;
-                await homestayModel.addHomeStay(name, +idCity, +num_bedroom, +num_badroom, +price, descript).catch(err => console.log(err.message));
+                await homestayModel.addHomeStay(name, +idCity, +num_bedroom, +num_badroom, +price, descript).catch(err => {
+                    res.writeHead(301, {location: '/add'});
+                    res.end();
+                });
                 res.writeHead(301, {location: '/'});
                 res.end();
             })
@@ -101,6 +104,20 @@ class HomeStayController {
                 res.writeHead(301, {location: '/'});
                 res.end();
             })
+        }
+    }
+
+    static async deleteHomestay(req, res) {
+        let query = qs.parse(url.parse(req.url).query);
+        if (req.method === "GET") {
+            let html = await BaseController.readFileData('./src/views/delete.html');
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(html);
+            res.end();
+        } else {
+            await homestayModel.deleteHomestay(+query.id).catch(err => console.log(err));
+            res.writeHead(301, {location: '/'});
+            res.end();
         }
     }
 }
